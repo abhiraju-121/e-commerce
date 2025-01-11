@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block datedescription %}
+    {{ product.description|truncatewords:155 }}
+{% endblock %}
+{% block title %}
+    {% if category %}
+        {{product.name }} -ABC Store
+    {% endif %}
+{% block content %}
+<div class="row my_prod_row_class">
+    <div class="mx_auto">
+        <p><a href="{% url 'gameapp:allProdCat' %}"></a>
+        <a href="{{ product.category.get_url }}">{{product.category}}</a>{{product.name}}</p>
+    </div>
+</div>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+            <div class="min-width:18rem;">
+                <img src="{{product.image.url}}" alt="{{product.name}}">
+            </div>
+        </div>
+        <div class="col-12 col-md-12 col-sm-12 col-lg-6">
+            <div>
+                <h1 class="my_prod_title">{{product.name}}</h1>
+                <h4>${{product.price}}</h4>
+                <p class="my_title">Product Description</p>
+                <p class="text-justify my_rod_text">{{product.description}}</p>
+                {% if product.stock <= 0 %}
+                <p class="text-justify my_prod_text"><b>Out Of Stock</b></p>
+                {% else %}
+                <a class="btn btn-secondary" href="{% url 'cart:add_cart' product.id %}">Add to<i class="fa fa-cart-plus"></i> </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% endblock %}
